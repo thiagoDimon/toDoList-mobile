@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ToDoApp</string>
+    <string name="clique_para_selecionar_data">Clique para selecionar data</string>
+</resources>
