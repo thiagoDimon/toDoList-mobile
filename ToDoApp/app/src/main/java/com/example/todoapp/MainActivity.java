@@ -12,9 +12,12 @@ import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -27,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        LinearLayout linearLayout = findViewById(R.id.main);
+        CoordinatorLayout coordinatorLayout = findViewById(R.id.main);
 
-        Button button = findViewById(R.id.btn_add);
-        button.setOnClickListener(click -> {
+        FloatingActionButton floatingActionButton = findViewById(R.id.btn_add);
+        floatingActionButton.setOnClickListener(click -> {
             Dialog dialog = new Dialog(this);
             dialog.setTitle("Adicionar item");
 
