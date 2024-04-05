@@ -1,5 +1,6 @@
 package br.edu.satc.todolistbase
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -26,18 +27,19 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerViewAdapter()
 
-        loadData()
-
         // Pega a referência de nosso botão FloatActionButton e seu click
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
 
+            startActivity(Intent(this, NewEditToDoItemActivity::class.java))
+
+            /**
             // Inclusao fake. Add um item na lista
             // cria o item
             val item = ToDoItem(
-                null,
-                "Item de teste ${toDoItemList.size + 1}",
-                "Title",
-                false
+            null,
+            "Titulo",
+            "Item de teste ${toDoItemList.size + 1}",
+            false
             )
 
             // add o item na lista
@@ -48,7 +50,13 @@ class MainActivity : AppCompatActivity() {
 
             // Salva no banco de dados
             db.toDoItemDao().insertAll(item)
+             **/
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadData()
     }
 
     /**
@@ -99,7 +107,9 @@ class MainActivity : AppCompatActivity() {
 
         // Prepara nosso método de checked em um item da lista
         val itemOnChecked: (Boolean, ToDoItem) -> Unit = { isChecked, item ->
-            Log.d(TAG, "Checked: $isChecked | desc: ${item.description}")
+            Log.d(TAG, "Click: $isChecked | desc: ${item.complete}")
+            item.complete = isChecked
+            db.toDoItemDao().updateToDoItems(item)
         }
 
         // Instancia o adapter passando a lista e o método que será disparado no click de item
@@ -111,6 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
+        toDoItemList.clear()
         toDoItemList.addAll(db.toDoItemDao().getAll() as ArrayList<ToDoItem>)
         toDoItemAdapter.notifyDataSetChanged()
     }
